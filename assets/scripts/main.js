@@ -10,10 +10,12 @@ var party_opt = document.getElementById("radio-party-horn");
 var sound_img = document.getElementById("sound-image");
 
 var honk_btn = document.getElementById("honk-btn");
-honk_btn.type = "button";
 
 // updates volume and slider value
 num_in.addEventListener("input", function() {
+    if (num_in.value.length == 0) {
+        num_in.value = 0;
+    }
     aud.volume = Number(num_in.value) / 100;     // update audio volume
     slider_in.value = num_in.value;     // update slider
     updateIcon(num_in.value);     // change volume icon
@@ -41,6 +43,7 @@ function updateIcon(vol) {
     }
 }
 
+// disables/enables button depending on volume
 function updateButton(vol) {
     if (vol == 0) {
         honk_btn.disabled = true;
@@ -49,6 +52,7 @@ function updateButton(vol) {
     }
 }
 
+// switches image and sound to air horn
 air_opt.addEventListener("input", function() {
     if (air_opt.checked) {
         sound_img.src = "./assets/media/images/air-horn.svg";
@@ -56,6 +60,7 @@ air_opt.addEventListener("input", function() {
     }
 });
 
+// switches image and sound to car horn
 car_opt.addEventListener("input", function() {
     if (car_opt.checked) {
         sound_img.src = "./assets/media/images/car.svg";
@@ -63,6 +68,7 @@ car_opt.addEventListener("input", function() {
     }
 });
 
+// switches image and sound to party horn
 party_opt.addEventListener("input", function() {
     if (party_opt.checked) {
         sound_img.src = "./assets/media/images/party-horn.svg";
@@ -70,6 +76,8 @@ party_opt.addEventListener("input", function() {
     }
 });
 
-honk_btn.addEventListener("click", function() {
+// stops page reload and plays audio
+honk_btn.addEventListener("click", function(e) {
+    e.preventDefault();
     aud.play();
 });
